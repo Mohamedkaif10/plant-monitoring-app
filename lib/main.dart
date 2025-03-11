@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'plant_diagnosis.dart'; // Import PlantDiagnosisPage
 import 'plants.dart'; // Import PlantsPage
-import 'profile.dart'; // Import the new ProfilePage
+import 'profile.dart'; // Import ProfilePage
+import 'schedule.dart'; // Import the new SchedulePage
 
 void main() {
   runApp(PlantGuruApp());
@@ -43,6 +44,12 @@ class _MainPageState extends State<MainPage> {
           MaterialPageRoute(builder: (context) => PlantsPage()),
         );
       } else if (index == 3) {
+        // Navigate to SchedulePage when watering can is tapped
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SchedulePage()),
+        );
+      } else if (index == 4) {
         // Navigate to ProfilePage when profile icon is tapped
         Navigator.push(
           context,
@@ -74,6 +81,10 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_florist),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.local_florist), // Watering can icon
             label: '',
           ),
           BottomNavigationBarItem(
