@@ -89,7 +89,7 @@ class ProfilePage extends StatelessWidget {
                     border: Border.all(color: Colors.black, width: 2),
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                      image: NetworkImage('https://example.com/banana_leaf.jpg'), // Replace with actual image URL
+                      image: NetworkImage('https://placehold.co/150/png'), // Replace with actual image URL
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -97,36 +97,9 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 24),
-            // Bottom Navigation Icons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildBottomIcon(Icons.home, 'Home'),
-                _buildBottomIcon(Icons.local_florist, ''),
-                _buildBottomIcon(Icons.camera_alt, ''),
-                _buildBottomIcon(Icons.person, 'Profile'),
-              ],
-            ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildBottomIcon(IconData icon, String label) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 20,
-          backgroundColor: Colors.green[400],
-          child: Icon(icon, color: Colors.white),
-        ),
-        SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(color: Colors.green),
-        ),
-      ],
     );
   }
 }

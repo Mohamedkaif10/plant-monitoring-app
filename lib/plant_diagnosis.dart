@@ -32,7 +32,7 @@ class PlantDiagnosisPage extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                      image: NetworkImage('https://example.com/monstera.jpg'), // Replace with actual image URL
+                      image: NetworkImage('https://placehold.co/150/png'), // Replace with actual image URL
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -234,7 +234,9 @@ class PlantDiagnosisPage extends StatelessWidget {
                 backgroundColor: Colors.blue,
                 minimumSize: Size(double.infinity, 50),
               ),
-              child: Text('Log Today\'s Progress'),
+              child: Text('Log Today\'s Progress', style: TextStyle(
+                color: Colors.white,
+              ),),
             ),
           ],
         ),

@@ -105,19 +105,19 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        color: Colors.green[50],
-        padding: EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildBottomIcon(Icons.home, 'Home'),
-            _buildBottomIcon(Icons.local_florist, ''),
-            _buildBottomIcon(Icons.camera_alt, ''),
-            _buildBottomIcon(Icons.person, 'Profile'),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   color: Colors.green[50],
+      //   padding: EdgeInsets.all(16),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //     children: [
+      //       _buildBottomIcon(Icons.home, 'Home'),
+      //       _buildBottomIcon(Icons.local_florist, ''),
+      //       _buildBottomIcon(Icons.camera_alt, ''),
+      //       _buildBottomIcon(Icons.person, 'Profile'),
+      //     ],
+      //   ),
+      // ),
     );
   }
 

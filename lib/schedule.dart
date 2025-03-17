@@ -139,20 +139,20 @@ class _SchedulePageState extends State<SchedulePage> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        color: Colors.green[50],
-        padding: EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildBottomIcon(Icons.home, 'Home'),
-            _buildBottomIcon(Icons.qr_code, ''),
-            _buildBottomIcon(Icons.local_florist, ''),
-            _buildBottomIcon(Icons.local_florist, 'Schedule'),
-            _buildBottomIcon(Icons.person, 'Profile'),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   color: Colors.green[50],
+      //   padding: EdgeInsets.all(16),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //     children: [
+      //       _buildBottomIcon(Icons.home, 'Home'),
+      //       _buildBottomIcon(Icons.qr_code, ''),
+      //       _buildBottomIcon(Icons.local_florist, ''),
+      //       _buildBottomIcon(Icons.local_florist, 'Schedule'),
+      //       _buildBottomIcon(Icons.person, 'Profile'),
+      //     ],
+      //   ),
+      // ),
     );
   }
 
