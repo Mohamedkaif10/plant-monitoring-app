@@ -77,7 +77,7 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code),
-            label: '',
+            label: 'Diagnosis',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_florist),
@@ -85,11 +85,11 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_florist), // Watering can icon
-            label: '',
+            label: 'Schedule',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: '',
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -107,9 +107,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final List<String> plantImages = [
-    'https://example.com/snake_plant.jpg', // Replace with actual image URLs
-    'https://example.com/plant2.jpg',
-    'https://example.com/plant3.jpg',
+    'https://placehold.co/150/png', // Replace with actual image URLs
+    'https://placehold.co/150/png',
+    'https://placehold.co/150/png',
   ];
   final List<Map<String, String>> plantDetails = [
     {

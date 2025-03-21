@@ -42,12 +42,12 @@ class PlantsPage extends StatelessWidget {
               children: [
                 _buildCategoryCard(
                   context: context,
-                  imageUrl: 'https://example.com/indoor_plants.jpg', // Replace with actual image URL
+                  imageUrl: 'https://placehold.co/150/png',
                   title: 'Indoor Plants',
                 ),
                 _buildCategoryCard(
                   context: context,
-                  imageUrl: 'https://example.com/flowering_plants.jpg', // Replace with actual image URL
+                  imageUrl: 'https://placehold.co/150/png',
                   title: 'Flowering Plants',
                 ),
               ],
@@ -64,12 +64,12 @@ class PlantsPage extends StatelessWidget {
               children: [
                 _buildFamousPlantCard(
                   context: context,
-                  imageUrl: 'https://example.com/monstera.jpg', // Replace with actual image URL
+                  imageUrl: 'https://placehold.co/150/png',
                   title: 'Monstera Deliciosa',
                 ),
                 _buildFamousPlantCard(
                   context: context,
-                  imageUrl: 'https://example.com/orange_girl.jpg', // Replace with actual image URL
+                  imageUrl: 'https://placehold.co/150/png',
                   title: 'Orange Girl Pot',
                 ),
               ],
@@ -81,21 +81,22 @@ class PlantsPage extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
-            Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.green[400],
-                borderRadius: BorderRadius.circular(20),
-              ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Plants can "talk" to each other! They release chemicals through the air and soil to warn nearby plants about pests or stress, helping them prepare for defense. 🌱',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
+                children: List.generate(3, (index) => Container(
+                  width: MediaQuery.of(context).size.width * 0.8, // Adjust width as needed
+                  margin: EdgeInsets.only(right: 16),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.green[400],
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                ],
+                  child: Text(
+                    'Plants can "talk" to each other! They release chemicals through the air and soil to warn nearby plants about pests or stress, helping them prepare for defense. 🌱',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                )),
               ),
             ),
           ],
@@ -107,27 +108,34 @@ class PlantsPage extends StatelessWidget {
   // Category Card
   Widget _buildCategoryCard({required BuildContext context, required String imageUrl, required String title}) {
     return Container(
-      width: (MediaQuery.of(context).size.width - 48) / 2,
-      height: 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(
-            color: Colors.green[400],
-            borderRadius: BorderRadius.circular(5),
+      width: (MediaQuery.of(context).size.width - 48) / 2.3,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          SizedBox(
+            height: 60, // Scale down image
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.contain,
+            ),
           ),
-          child: Text(
-            title,
-            style: TextStyle(color: Colors.white, fontSize: 16),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.green[400],
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              child: Text(
+                title,
+                style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -136,31 +144,38 @@ class PlantsPage extends StatelessWidget {
   Widget _buildFamousPlantCard({required BuildContext context, required String imageUrl, required String title}) {
     return Container(
       width: (MediaQuery.of(context).size.width - 48) / 2,
-      height: 150,
+      height: 180,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black, width: 2),
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.green[400],
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
-          ),
-          child: Center(
-            child: Text(
-              title,
-              style: TextStyle(color: Colors.white, fontSize: 16),
+      child: Column(
+        children: [
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(13)),
+              child: Image.network(
+                imageUrl,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.green[400],
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(13)),
+            ),
+            child: Center(
+              child: Text(
+                title,
+                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
