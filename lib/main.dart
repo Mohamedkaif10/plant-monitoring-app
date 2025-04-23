@@ -3,6 +3,7 @@ import 'plant_diagnosis.dart'; // Import PlantDiagnosisPage
 import 'plants.dart'; // Import PlantsPage
 import 'profile.dart'; // Import ProfilePage
 import 'schedule.dart'; // Import the new SchedulePage
+import 'image_upload_page.dart'; // Import the new ImageUploadPage
 
 void main() {
   runApp(PlantGuruApp());
@@ -32,10 +33,10 @@ class _MainPageState extends State<MainPage> {
   void _onItemTapped(int index) {
     setState(() {
       if (index == 1) {
-        // Navigate to PlantDiagnosisPage when QR code is tapped
+        // Navigate to ImageUploadPage when QR code is tapped
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PlantDiagnosisPage()),
+          MaterialPageRoute(builder: (context) => ImageUploadPage()),
         );
       } else if (index == 2) {
         // Navigate to PlantsPage when plant logo is tapped
