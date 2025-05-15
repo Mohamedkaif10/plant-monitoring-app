@@ -5,6 +5,7 @@ import 'profile.dart'; // Import ProfilePage
 import 'schedule.dart'; // Import the new SchedulePage
 import 'image_upload_page.dart'; // Import the new ImageUploadPage
 import 'theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(PlantGuruApp());
@@ -34,16 +35,16 @@ class _MainPageState extends State<MainPage> {
   void _onItemTapped(int index) {
     setState(() {
       if (index == 1) {
-        // Navigate to ImageUploadPage when QR code is tapped
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ImageUploadPage()),
-        );
-      } else if (index == 2) {
-        // Navigate to PlantsPage when plant logo is tapped
+        // Navigate to PlantsPage when Plants icon is tapped
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => PlantsPage()),
+        );
+      } else if (index == 2) {
+        // Navigate to ImageUploadPage when Diagnosis (QR code) is tapped
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ImageUploadPage()),
         );
       } else if (index == 3) {
         // Navigate to SchedulePage when watering can is tapped
@@ -78,12 +79,12 @@ class _MainPageState extends State<MainPage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code),
-            label: 'Diagnosis',
+            icon: Icon(Icons.local_florist),
+            label: 'Plants',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_florist),
-            label: '',
+            icon: Icon(Icons.qr_code),
+            label: 'Diagnosis',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_florist), // Watering can icon
@@ -107,6 +108,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<void> _launchURL() async {
+    final Uri url = Uri.parse('https://en.wikipedia.org/wiki/Monstera_deliciosa');
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Future<void> _launchCategoryURL(String title) async {
+    final String urlString = title == 'Indoor Plants'
+        ? 'https://www.gardendesign.com/houseplants/best-indoor.html'
+        : 'https://en.wikipedia.org/wiki/Flowering_plant';
+    final Uri url = Uri.parse(urlString);
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $urlString';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             elevation: 0,
                           ),
-                          onPressed: () {},
+                          onPressed: _launchURL,
                           child: Text('Learn More', style: TextStyle(fontSize: 16)),
                         ),
                       ),
@@ -204,25 +222,22 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              // Category Row
               Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildCategoryCard(
-                      imageUrl: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308',
-                      title: 'Indoor Plants',
-                    ),
-                    SizedBox(width: 12),
-                    _buildCategoryCard(
-                      imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
-                      title: 'Flowering ...',
-                    ),
-                  ],
-                ),
-              
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildCategoryCard(
+                    imageUrl: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308',
+                    title: 'Indoor Plants',
+                  ),
+                  SizedBox(width: 12),
+                  _buildCategoryCard(
+                    imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
+                    title: 'Flowering ...',
+                  ),
+                ],
+              ),
               SizedBox(height: 24),
-              // Seasonal Tips
               Text('Seasonal Tips', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
               SizedBox(height: 12),
               Row(
@@ -245,52 +260,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               SizedBox(height: 24),
-              // Achievements
-              Text('Your Achievements', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-              SizedBox(height: 12),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: AppColors.card,
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
-                      blurRadius: 6,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.emoji_events, color: Colors.black, size: 22),
-                        SizedBox(width: 8),
-                        Text('Plant Care Streak', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Spacer(),
-                        Text('🔥', style: TextStyle(fontSize: 18)),
-                      ],
-                    ),
-                    SizedBox(height: 4),
-                    Text('7 days and counting!'),
-                    SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Icon(Icons.emoji_events_outlined, color: Colors.black, size: 22),
-                        SizedBox(width: 8),
-                        Text('Active Challenge', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Spacer(),
-                        Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
-                      ],
-                    ),
-                    SizedBox(height: 4),
-                    Text('Growing Master Level 2'),
-                  ],
-                ),
-              ),
               SizedBox(height: 24),
             ],
           ),
@@ -300,33 +269,36 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategoryCard({required String imageUrl, required String title}) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.45,
-      height: 56,
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.horizontal(left: Radius.circular(12)),
-            child: Image.network(
-              imageUrl,
-              width: 56,
-              height: 56,
-              fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () => _launchCategoryURL(title),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.45,
+        height: 56,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.horizontal(left: Radius.circular(12)),
+              child: Image.network(
+                imageUrl,
+                width: 56,
+                height: 56,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              title,
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
-              overflow: TextOverflow.ellipsis,
+            SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -353,7 +325,10 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 6),
           Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 2),
-          Text(description, style: TextStyle(fontSize: 13, color: Colors.grey[700])),
+          Text(
+            description,
+            style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+          ),
         ],
       ),
     );
