@@ -1,104 +1,178 @@
 import 'package:flutter/material.dart';
 import 'settings.dart'; // Import the new SettingsPage
+import 'theme.dart';
 
 class ProfilePage extends StatelessWidget {
+  final List<Map<String, dynamic>> gardenPlants = [
+    {
+      'image': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+      'name': 'Monstera',
+      'statusIcon': Icons.opacity,
+      'statusColor': Colors.blue,
+      'status': 'Water in 2 days',
+    },
+    {
+      'image': 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
+      'name': 'Snake Plant',
+      'statusIcon': Icons.wb_sunny,
+      'statusColor': Colors.amber,
+      'status': 'Needs light',
+    },
+    {
+      'image': 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308',
+      'name': 'Peace Lily',
+      'statusIcon': Icons.thermostat,
+      'statusColor': Colors.red,
+      'status': 'Check humidity',
+    },
+    {
+      'image': 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6',
+      'name': 'Succulent',
+      'statusIcon': Icons.check_circle,
+      'statusColor': Colors.green,
+      'status': 'Healthy',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
         elevation: 0,
         title: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey[200],
-              child: Icon(Icons.landscape, color: Colors.green),
-            ),
+            Icon(Icons.spa, color: AppColors.primary),
             SizedBox(width: 8),
             Text(
-              'PlantGuru',
+              'Plant Pulse',
               style: TextStyle(
-                color: Colors.green,
-                fontSize: 20,
+                color: AppColors.primary,
                 fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
             ),
           ],
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Text(
-                  '50',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                ),
-                SizedBox(width: 4),
-                Icon(Icons.star, color: Colors.amber),
-              ],
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.share),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SettingsPage()),
-              );
-            },
+          Row(
+            children: [
+              Icon(Icons.monetization_on, color: Colors.amber, size: 22),
+              SizedBox(width: 2),
+              Text('50', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+              SizedBox(width: 8),
+              IconButton(
+                icon: Icon(Icons.share, color: Colors.grey[700]),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.settings, color: Colors.grey[700]),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // User Profile Section
-            CircleAvatar(
-              radius: 40,
-              backgroundColor: Colors.green,
-              child: Icon(Icons.person, size: 40, color: Colors.white),
+        padding: EdgeInsets.all(0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Profile Section
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 28,
+                    backgroundColor: AppColors.lightGreen,
+                    child: Icon(Icons.person, size: 32, color: AppColors.primary),
+                  ),
+                  SizedBox(width: 14),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Priya Sharma', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19)),
+                      Text('Plant Enthusiast', style: TextStyle(color: AppColors.primary, fontSize: 15)),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 18),
+              Text('My Garden', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+              SizedBox(height: 12),
+              GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 14,
+                mainAxisSpacing: 14,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                childAspectRatio: 0.95,
+                children: gardenPlants.map((plant) => _buildPlantCard(plant)).toList(),
+              ),
+              SizedBox(height: 24),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlantCard(Map<String, dynamic> plant) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            child: Image.network(
+              plant['image'],
+              width: double.infinity,
+              height: 90,
+              fit: BoxFit.cover,
             ),
-            SizedBox(height: 8),
-            Text(
-              'Shivanjali Guru',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 10, 12, 2),
+            child: Text(
+              plant['name'],
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
-            SizedBox(height: 24),
-            // My Garden Section
-            Text(
-              'My Garden',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green),
-            ),
-            SizedBox(height: 16),
-            Wrap(
-              spacing: 16,
-              runSpacing: 16,
-              children: List.generate(
-                4,
-                (index) => Container(
-                  width: (MediaQuery.of(context).size.width - 48) / 2,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 2),
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage('https://placehold.co/150/png'), // Replace with actual image URL
-                      fit: BoxFit.cover,
-                    ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+            child: Row(
+              children: [
+                Icon(plant['statusIcon'], color: plant['statusColor'], size: 16),
+                SizedBox(width: 5),
+                Expanded(
+                  child: Text(
+                    plant['status'],
+                    style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              ),
+              ],
             ),
-            SizedBox(height: 24),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

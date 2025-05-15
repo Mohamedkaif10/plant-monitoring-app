@@ -3,6 +3,8 @@ import 'plant_diagnosis.dart'; // Import PlantDiagnosisPage
 import 'plants.dart'; // Import PlantsPage
 import 'profile.dart'; // Import ProfilePage
 import 'schedule.dart'; // Import the new SchedulePage
+import 'image_upload_page.dart'; // Import the new ImageUploadPage
+import 'theme.dart';
 
 void main() {
   runApp(PlantGuruApp());
@@ -32,10 +34,10 @@ class _MainPageState extends State<MainPage> {
   void _onItemTapped(int index) {
     setState(() {
       if (index == 1) {
-        // Navigate to PlantDiagnosisPage when QR code is tapped
+        // Navigate to ImageUploadPage when QR code is tapped
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PlantDiagnosisPage()),
+          MaterialPageRoute(builder: (context) => ImageUploadPage()),
         );
       } else if (index == 2) {
         // Navigate to PlantsPage when plant logo is tapped
@@ -105,155 +107,253 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
-  final List<String> plantImages = [
-    'https://placehold.co/150/png', // Replace with actual image URLs
-    'https://placehold.co/150/png',
-    'https://placehold.co/150/png',
-  ];
-  final List<Map<String, String>> plantDetails = [
-    {
-      'name': 'Snake Plant',
-      'description':
-          'The snake plant effortlessly purifies the air while adding a touch of modern elegance to any space...',
-    },
-    {
-      'name': 'Aloe Vera',
-      'description':
-          'Aloe Vera is known for its soothing properties and low maintenance care...',
-    },
-    {
-      'name': 'Peace Lily',
-      'description':
-          'The Peace Lily brings tranquility and beauty to any room...',
-    },
-  ];
-
-  void _nextPlant() {
-    setState(() {
-      _currentIndex = (_currentIndex + 1) % plantImages.length;
-    });
-  }
-
-  void _previousPlant() {
-    setState(() {
-      _currentIndex =
-          (_currentIndex - 1 + plantImages.length) % plantImages.length;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.card,
         elevation: 0,
         title: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey[200],
-              child: Icon(Icons.landscape, color: Colors.green),
-            ),
-            SizedBox(width: 8),
             Text(
-              'PlantGuru',
+              'logo',
               style: TextStyle(
-                color: Colors.green,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontFamily: 'Pacifico', // Use a script font if available
+                color: Colors.black,
+                fontSize: 28,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Text(
-                  '50',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+          IconButton(
+            icon: Icon(Icons.emoji_events_outlined, color: Colors.black),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Featured Plant Card
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 4, bottom: 16),
+                decoration: BoxDecoration(
+                  color: AppColors.card,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.06),
+                      blurRadius: 10,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 4),
-                Icon(Icons.star, color: Colors.amber),
-              ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      child: Image.network(
+                        'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+                        height: 170,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                      child: Text(
+                        'Monstera Deliciosa',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Text(
+                        "Today's featured tropical beauty, known for its stunning split leaves and easy care requirements.",
+                        style: TextStyle(color: Colors.grey[700], fontSize: 15),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            foregroundColor: Colors.white,
+                            minimumSize: Size(double.infinity, 48),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                              side: BorderSide(color: AppColors.primary, width: 2),
+                            ),
+                            elevation: 0,
+                          ),
+                          onPressed: () {},
+                          child: Text('Learn More', style: TextStyle(fontSize: 16)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Category Row
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildCategoryCard(
+                      imageUrl: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308',
+                      title: 'Indoor Plants',
+                    ),
+                    SizedBox(width: 12),
+                    _buildCategoryCard(
+                      imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
+                      title: 'Flowering ...',
+                    ),
+                  ],
+                ),
+              
+              SizedBox(height: 24),
+              // Seasonal Tips
+              Text('Seasonal Tips', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+              SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildTipCard(
+                      icon: Icons.wb_sunny_outlined,
+                      title: 'Summer Care',
+                      description: 'Keep your plants hydrated and protected from intense afternoon sun.',
+                    ),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: _buildTipCard(
+                      icon: Icons.opacity,
+                      title: 'Watering',
+                      description: 'Learn the best watering routines for different plants.',
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 24),
+              // Achievements
+              Text('Your Achievements', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+              SizedBox(height: 12),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.card,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 6,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.emoji_events, color: Colors.black, size: 22),
+                        SizedBox(width: 8),
+                        Text('Plant Care Streak', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Spacer(),
+                        Text('🔥', style: TextStyle(fontSize: 18)),
+                      ],
+                    ),
+                    SizedBox(height: 4),
+                    Text('7 days and counting!'),
+                    SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Icon(Icons.emoji_events_outlined, color: Colors.black, size: 22),
+                        SizedBox(width: 8),
+                        Text('Active Challenge', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Spacer(),
+                        Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
+                      ],
+                    ),
+                    SizedBox(height: 4),
+                    Text('Growing Master Level 2'),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryCard({required String imageUrl, required String title}) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.45,
+      height: 56,
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.horizontal(left: Radius.circular(12)),
+            child: Image.network(
+              imageUrl,
+              width: 56,
+              height: 56,
+              fit: BoxFit.cover,
+            ),
+          ),
+          SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
       ),
-      body: Column(
+    );
+  }
+
+  Widget _buildTipCard({required IconData icon, required String title, required String description}) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.18,
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                height: 250,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(
-                    image: NetworkImage(plantImages[_currentIndex]),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 24,
-                top: 110,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, size: 30),
-                  onPressed: _previousPlant,
-                ),
-              ),
-              Positioned(
-                right: 24,
-                top: 110,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_forward, size: 30),
-                  onPressed: _nextPlant,
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  plantDetails[_currentIndex]['name']!,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  plantDetails[_currentIndex]['description']!,
-                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                ),
-                SizedBox(height: 16),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'READ MORE',
-                    style: TextStyle(color: Colors.blue, fontSize: 16),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              plantImages.length,
-              (index) => Container(
-                margin: EdgeInsets.symmetric(horizontal: 4),
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _currentIndex == index ? Colors.green : Colors.grey,
-                ),
-              ),
-            ),
-          ),
+          Icon(icon, color: Colors.black, size: 22),
+          SizedBox(height: 6),
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 2),
+          Text(description, style: TextStyle(fontSize: 13, color: Colors.grey[700])),
         ],
       ),
     );
