@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'theme.dart';
 
 class PlantDiagnosisPage extends StatelessWidget {
   final Map<String, dynamic>? diagnosisData;
@@ -40,7 +41,7 @@ class PlantDiagnosisPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.card,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -53,229 +54,252 @@ class PlantDiagnosisPage extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Plant Image and Diagnosis Header
-            Row(
-              children: [
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: image != null 
-                          ? FileImage(image!)
-                          : AssetImage('assets/placeholder.png') as ImageProvider,
-                      fit: BoxFit.cover,
+      body: Container(
+        color: AppColors.background,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Plant Image and Diagnosis Header
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.card,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.03),
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
                     ),
-                  ),
+                  ],
                 ),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      plantName,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    Container(
+                      width: 64,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        image: DecorationImage(
+                          image: image != null 
+                              ? FileImage(image!)
+                              : AssetImage('assets/placeholder.png') as ImageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 4),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.red[50],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(Icons.warning, color: Colors.red, size: 16),
-                          SizedBox(width: 4),
                           Text(
-                            issue,
-                            style: TextStyle(color: Colors.red, fontSize: 14),
+                            plantName,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: AppColors.lightRed,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.warning, color: AppColors.error, size: 16),
+                                SizedBox(width: 4),
+                                Text(
+                                  issue,
+                                  style: TextStyle(color: AppColors.error, fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Text('Severity: '),
+                              Icon(Icons.circle, color: AppColors.error, size: 10),
+                              Icon(Icons.circle, color: AppColors.error, size: 10),
+                              Icon(Icons.circle, color: AppColors.grey, size: 10),
+                              SizedBox(width: 4),
+                              Text(severity),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Text('Severity: '),
-                        Icon(Icons.circle, color: Colors.red, size: 10),
-                        Icon(Icons.circle, color: Colors.red, size: 10),
-                        Icon(Icons.circle, color: Colors.grey, size: 10),
-                        SizedBox(width: 4),
-                        Text(severity),
-                      ],
+                  ],
+                ),
+              ),
+              SizedBox(height: 16),
+              // Quick Fix Section
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.lightBlue,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.lightbulb_outline, color: AppColors.secondary),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Quick Fix: $quickFix',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ],
                 ),
-              ],
-            ),
-            SizedBox(height: 16),
-            // Quick Fix Section
-            Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.blue[50],
-                borderRadius: BorderRadius.circular(10),
               ),
-              child: Row(
+              SizedBox(height: 16),
+              // Problem Details Section
+              Text(
+                'Problem Details',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              _buildDetailSection(
+                title: 'What\'s the Issue?',
+                content: problemDetails['issue'],
+                color: AppColors.error,
+              ),
+              _buildDetailSection(
+                title: 'Effects on Plant',
+                content: problemDetails['effects'],
+                color: AppColors.warning,
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Possible Causes',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 4),
+              ...problemDetails['causes'].map<Widget>((cause) => _buildBulletPoint(cause)),
+              SizedBox(height: 16),
+              // Recommended Solutions
+              Text(
+                'Recommended Solutions',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Row(
                 children: [
-                  Icon(Icons.lightbulb_outline, color: Colors.blue),
+                  Icon(Icons.eco, color: AppColors.primary),
+                  SizedBox(width: 8),
+                  Text(
+                    'Organic Solution',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.lightGreen,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: solutions['organic'].map<Widget>((solution) => _buildCheckPoint(solution)).toList(),
+                ),
+              ),
+              SizedBox(height: 16),
+              // Chemical Solution
+              Text(
+                'Chemical Solution',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.secondary),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Recommended Products:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              ...solutions['chemical'].map<Widget>((product) => _buildProductCard(
+                product['name'],
+                product['description'],
+                product['price'],
+              )),
+              SizedBox(height: 16),
+              // Prevention & Care
+              Text(
+                'Prevention & Care',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Seasonal Care',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildCareCard(
+                      'Summer',
+                      prevention['summer'],
+                      Icons.wb_sunny,
+                    ),
+                  ),
                   SizedBox(width: 8),
                   Expanded(
-                    child: Text(
-                      'Quick Fix: $quickFix',
-                      style: TextStyle(fontSize: 16),
+                    child: _buildCareCard(
+                      'Winter',
+                      prevention['winter'],
+                      Icons.ac_unit,
                     ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 16),
-            // Problem Details Section
-            Text(
-              'Problem Details',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            _buildDetailSection(
-              title: 'What\'s the issue?',
-              content: problemDetails['issue'],
-              color: Colors.red,
-            ),
-            _buildDetailSection(
-              title: 'Effects on Plant',
-              content: problemDetails['effects'],
-              color: Colors.orange,
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Possible Causes',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 4),
-            ...problemDetails['causes'].map<Widget>((cause) => _buildBulletPoint(cause)),
-            SizedBox(height: 16),
-            // Recommended Solutions
-            Text(
-              'Recommended Solutions',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Row(
-              children: [
-                Icon(Icons.eco, color: Colors.green),
-                SizedBox(width: 8),
-                Text(
-                  'Organic Solution',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            SizedBox(height: 8),
-            Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.green[50],
-                borderRadius: BorderRadius.circular(10),
+              SizedBox(height: 16),
+              Text(
+                'Do\'s & Don\'ts',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              child: Column(
-                children: solutions['organic'].map<Widget>((solution) => _buildCheckPoint(solution)).toList(),
+              SizedBox(height: 8),
+              ...dosAndDonts.map<Widget>((item) => _buildDoDont(item['text'], item['isDo'])),
+              SizedBox(height: 16),
+              // Progress Tracker
+              Text(
+                'Progress Tracker',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-            ),
-            SizedBox(height: 16),
-            // Chemical Solution
-            Text(
-              'Chemical Solution',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.purple),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Recommended Products:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            ...solutions['chemical'].map<Widget>((product) => _buildProductCard(
-              product['name'],
-              product['description'],
-              product['price'],
-            )),
-            SizedBox(height: 16),
-            // Prevention & Care
-            Text(
-              'Prevention & Care',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Seasonal Care',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildCareCard(
-                    'Summer',
-                    prevention['summer'],
-                    Icons.wb_sunny,
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Treatment Progress'),
+                  Text('Day 3 of 14'),
+                ],
+              ),
+              SizedBox(height: 8),
+              LinearProgressIndicator(
+                value: 3 / 14,
+                backgroundColor: AppColors.grey,
+                color: AppColors.primary,
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondary,
+                  minimumSize: Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                SizedBox(width: 8),
-                Expanded(
-                  child: _buildCareCard(
-                    'Winter',
-                    prevention['winter'],
-                    Icons.ac_unit,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Do\'s & Don\'ts',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            ...dosAndDonts.map<Widget>((item) => _buildDoDont(item['text'], item['isDo'])),
-            SizedBox(height: 16),
-            // Progress Tracker
-            Text(
-              'Progress Tracker',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Treatment Progress'),
-                Text('Day 3 of 14'),
-              ],
-            ),
-            SizedBox(height: 8),
-            LinearProgressIndicator(
-              value: 3 / 14,
-              backgroundColor: Colors.grey[300],
-              color: Colors.green,
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                minimumSize: Size(double.infinity, 50),
+                child: Text('Log Today\'s Progress'),
               ),
-              child: Text('Log Today\'s Progress'),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

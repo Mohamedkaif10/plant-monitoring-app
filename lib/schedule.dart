@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'theme.dart';
 
 class SchedulePage extends StatefulWidget {
   @override
@@ -6,235 +7,228 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePageState extends State<SchedulePage> {
-  bool _enableReminders = false;
+  bool _enableReminders = true;
+  List<bool> _taskChecks = [false, false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
         elevation: 0,
         title: Text(
           'My Plant Schedule',
-          style: TextStyle(color: Colors.black, fontSize: 20),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications_none, color: AppColors.primary),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Plant Info
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: NetworkImage('https://example.com/aloe_vera.jpg'), // Replace with actual image URL
-                ),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Aloe Vera',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'Living Room',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
+        padding: EdgeInsets.all(0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Plant Card with Toggle
+              Container(
+                margin: EdgeInsets.only(bottom: 16),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                decoration: BoxDecoration(
+                  color: AppColors.card,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),
-              ],
-            ),
-            SizedBox(height: 16),
-            // Enable Reminders
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      'Enable Reminders',
-                      style: TextStyle(fontSize: 16),
+                    CircleAvatar(
+                      radius: 28,
+                      backgroundImage: NetworkImage('https://images.unsplash.com/photo-1501004318641-b39e6451bec6'),
                     ),
-                    Text(
-                      'Get notified about plant care tasks',
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Aloe Vera', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                          Text('Living Room', style: TextStyle(color: AppColors.grey, fontSize: 14)),
+                        ],
+                      ),
+                    ),
+                    Switch(
+                      value: _enableReminders,
+                      onChanged: (value) {
+                        setState(() {
+                          _enableReminders = value;
+                        });
+                      },
+                      activeColor: AppColors.primary,
+                      activeTrackColor: AppColors.lightGreen,
                     ),
                   ],
                 ),
-                Switch(
-                  value: _enableReminders,
-                  onChanged: (value) {
-                    setState(() {
-                      _enableReminders = value;
-                    });
-                  },
-                  activeColor: Colors.green,
-                  activeTrackColor: Colors.green[200],
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            // Next Actions
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildActionCard('Next Watering', 'Today, 8 AM', Icons.water_drop, Colors.blue[50]!),
-                _buildActionCard('Sunlight Check', 'Tomorrow 1hr', Icons.wb_sunny, Colors.yellow[50]!),
-              ],
-            ),
-            SizedBox(height: 24),
-            // Today's Tasks
-            Text(
-              "Today's Tasks",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            _buildTaskCard('Water Aloe Vera', '8 AM', Icons.water_drop),
-            _buildTaskCard('Move Snake Plant', '8 AM', Icons.wb_sunny),
-            SizedBox(height: 24),
-            // Your Progress
-            Text(
-              'Your Progress',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(10),
               ),
-              child: Row(
+              // Timeline
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Current Streak',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        '6 Days',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  _buildTimelineIcon(
+                    icon: Icons.opacity,
+                    color: Color(0xFFB3E5FC),
+                    label: 'Today, 8AM',
                   ),
-                  Row(
-                    children: List.generate(
-                      6,
-                      (index) => Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 4),
-                        child: Icon(Icons.local_florist, color: Colors.green, size: 20),
-                      ),
-                    ),
+                  _buildTimelineIcon(
+                    icon: Icons.wb_sunny,
+                    color: Color(0xFFFFF9C4),
+                    label: 'Tomorrow, 1hr',
+                  ),
+                  _buildTimelineIcon(
+                    icon: Icons.spa,
+                    color: Color(0xFFC8E6C9),
+                    label: 'Fri, 10AM',
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ),
-      // bottomNavigationBar: Container(
-      //   color: Colors.green[50],
-      //   padding: EdgeInsets.all(16),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //     children: [
-      //       _buildBottomIcon(Icons.home, 'Home'),
-      //       _buildBottomIcon(Icons.qr_code, ''),
-      //       _buildBottomIcon(Icons.local_florist, ''),
-      //       _buildBottomIcon(Icons.local_florist, 'Schedule'),
-      //       _buildBottomIcon(Icons.person, 'Profile'),
-      //     ],
-      //   ),
-      // ),
-    );
-  }
-
-  Widget _buildActionCard(String title, String subtitle, IconData icon, Color color) {
-    return Container(
-      width: (MediaQuery.of(context).size.width - 48) / 2,
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: Colors.black),
-          SizedBox(height: 8),
-          Text(
-            title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 14, color: Colors.grey),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTaskCard(String title, String time, IconData icon) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 8),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: Colors.black),
-              SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              SizedBox(height: 18),
+              // Personal Care Tasks
+              Row(
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    time,
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
+                  Text('Personal Care Tasks', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                  SizedBox(width: 6),
+                  Icon(Icons.build, size: 18),
                 ],
               ),
+              SizedBox(height: 10),
+              _buildTaskTile(0, 'Water Aloe Vera', '8 AM', Icons.opacity, AppColors.primary),
+              _buildTaskTile(1, 'Move Snake Plant', '9 AM', Icons.open_with, Colors.grey[700]),
+              _buildTaskTile(2, 'Trim dry leaves', 'For healthier growth', Icons.cut, Colors.green),
+              _buildTaskTile(3, 'Inspect for pests', 'Apply organic solution if needed', Icons.bug_report, Colors.red),
+              _buildTaskTile(4, 'Loosen soil', 'For better air circulation', Icons.grass, Colors.black),
+              SizedBox(height: 18),
+              // Progress
+              Text('Your Progress', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+              SizedBox(height: 8),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.card,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 6,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Current Streak', style: TextStyle(fontWeight: FontWeight.bold)),
+                        SizedBox(height: 2),
+                        Row(
+                          children: List.generate(6, (index) => Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 2),
+                            child: Icon(Icons.spa, color: AppColors.primary, size: 22),
+                          )),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text('6 Days', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 4),
+                        FloatingActionButton(
+                          mini: true,
+                          backgroundColor: AppColors.primary,
+                          onPressed: () {},
+                          child: Icon(Icons.add, color: Colors.white),
+                          elevation: 0,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24),
             ],
           ),
-          Checkbox(
-            value: false,
-            onChanged: (value) {},
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildBottomIcon(IconData icon, String label) {
+  Widget _buildTimelineIcon({required IconData icon, required Color color, required String label}) {
     return Column(
       children: [
         CircleAvatar(
-          radius: 20,
-          backgroundColor: Colors.green[400],
-          child: Icon(icon, color: Colors.white),
+          backgroundColor: color,
+          radius: 22,
+          child: Icon(icon, color: AppColors.primary, size: 26),
         ),
-        SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(color: Colors.green),
-        ),
+        SizedBox(height: 6),
+        Text(label, style: TextStyle(fontSize: 13)),
       ],
+    );
+  }
+
+  Widget _buildTaskTile(int idx, String title, String subtitle, IconData icon, Color? iconColor) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Checkbox(
+            value: _taskChecks[idx],
+            onChanged: (val) {
+              setState(() {
+                _taskChecks[idx] = val!;
+              });
+            },
+            activeColor: AppColors.primary,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          ),
+          Icon(icon, color: iconColor, size: 22),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 2),
+                Text(subtitle, style: TextStyle(fontSize: 13, color: Colors.grey[700])),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
