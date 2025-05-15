@@ -117,55 +117,7 @@ class _SchedulePageState extends State<SchedulePage> {
               _buildTaskTile(4, 'Loosen soil', 'For better air circulation', Icons.grass, Colors.black),
               SizedBox(height: 18),
               // Progress
-              Text('Your Progress', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-              SizedBox(height: 8),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.card,
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
-                      blurRadius: 6,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Current Streak', style: TextStyle(fontWeight: FontWeight.bold)),
-                        SizedBox(height: 2),
-                        Row(
-                          children: List.generate(6, (index) => Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2),
-                            child: Icon(Icons.spa, color: AppColors.primary, size: 22),
-                          )),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('6 Days', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 4),
-                        FloatingActionButton(
-                          mini: true,
-                          backgroundColor: AppColors.primary,
-                          onPressed: () {},
-                          child: Icon(Icons.add, color: Colors.white),
-                          elevation: 0,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              
               SizedBox(height: 24),
             ],
           ),

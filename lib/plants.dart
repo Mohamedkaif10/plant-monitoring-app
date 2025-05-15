@@ -48,10 +48,10 @@ class PlantsPage extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'Search plants...',
               hintStyle: TextStyle(color: AppColors.grey),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
+             border: OutlineInputBorder(  // Changed from OutlookInputBorder to OutlineInputBorder
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide.none,
+    ),
               filled: true,
               fillColor: AppColors.background,
               prefixIcon: Icon(Icons.search, color: AppColors.grey),
@@ -131,24 +131,36 @@ class PlantsPage extends StatelessWidget {
                     imageUrl: 'https://m.media-amazon.com/images/I/61nywQ21yqL._SX679_.jpg',
                     title: 'Ugaoo Air Purifying Bamboo Palm',
                     subtitle: 'Live Plant With Grow Pot',
+                    price: '₹599',
+                    about: 'The Bamboo Palm is an elegant indoor plant that purifies the air by removing toxins. It thrives in indirect light and requires moderate watering.',
+                    amazonLink: 'https://amzn.in/d/eBFCHJl',
                   ),
                   _buildFamousPlantCard(
                     context: context,
                     imageUrl: 'https://m.media-amazon.com/images/I/31DL28fs4-L.jpg',
                     title: 'Areca Palm',
                     subtitle: 'Indoor air purifying plants for living room Natural Live A Big Size "Areca Palm" Tree',
+                    price: '₹799',
+                    about: 'The Areca Palm is a popular choice for brightening up living spaces. It prefers bright, indirect light and regular watering to keep its lush fronds vibrant.',
+                    amazonLink: 'https://amzn.in/d/cYiajrg',
                   ),
                   _buildFamousPlantCard(
                     context: context,
                     imageUrl: 'https://m.media-amazon.com/images/I/41mH3c+M0hL.jpg',
                     title: 'Desert Roses Live Flower Plant',
                     subtitle: 'Cloud Farm Bonsai Air Layered Adenium/Desert Roses Live Flower Plant',
+                    price: '₹499',
+                    about: 'Desert Roses are striking succulents with vibrant blooms. They require minimal watering and thrive in bright, direct sunlight, making them ideal for sunny spots.',
+                    amazonLink: 'https://amzn.in/d/95qRpXW',
                   ),
                   _buildFamousPlantCard(
                     context: context,
                     imageUrl: 'https://m.media-amazon.com/images/I/71kCOMzV0TL._SX679_.jpg',
                     title: 'Pothos',
                     subtitle: 'Pothos plant',
+                    price: '₹299',
+                    about: 'Pothos is a low-maintenance trailing plant perfect for beginners. It grows well in low to medium light and needs watering when the soil feels dry.',
+                    amazonLink: 'https://amzn.in/d/55uty9H',
                   ),
                 ],
               ),
@@ -244,13 +256,25 @@ class PlantsPage extends StatelessWidget {
     required String imageUrl,
     required String title,
     required String subtitle,
+    required String price,
+    required String about,
+    required String amazonLink,
   }) {
     return GestureDetector(
-      onTap: () async {
-        final Uri url = Uri.parse('https://example.com'); // Replace with your link
-        if (!await launchUrl(url)) {
-          throw 'Could not launch $url';
-        }
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlantDetailPage(
+              imageUrl: imageUrl,
+              title: title,
+              subtitle: subtitle,
+              price: price,
+              about: about,
+              amazonLink: amazonLink,
+            ),
+          ),
+        );
       },
       child: Container(
         width: 172,
@@ -423,6 +447,125 @@ class PlantCategoryPage extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// New page to display details of a famous plant
+class PlantDetailPage extends StatelessWidget {
+  final String imageUrl;
+  final String title;
+  final String subtitle;
+  final String price;
+  final String about;
+  final String amazonLink;
+
+  const PlantDetailPage({
+    Key? key,
+    required this.imageUrl,
+    required this.title,
+    required this.subtitle,
+    required this.price,
+    required this.about,
+    required this.amazonLink,
+  }) : super(key: key);
+
+  Future<void> _launchAmazonLink() async {
+    final Uri url = Uri.parse(amazonLink);
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.card,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          title,
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
+              child: Image.network(
+                imageUrl,
+                width: double.infinity,
+                height: 250,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    subtitle,
+                    style: TextStyle(color: AppColors.grey, fontSize: 16),
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    price,
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'About',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    about,
+                    style: TextStyle(fontSize: 15, color: Colors.black87),
+                  ),
+                  SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: Colors.white,
+                        minimumSize: Size(double.infinity, 48),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                      ),
+                      onPressed: _launchAmazonLink,
+                      child: Text(
+                        'View in Amazon',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

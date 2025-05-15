@@ -133,17 +133,23 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColors.card,
         elevation: 0,
         title: Row(
-          children: [
-            Text(
-              'logo',
-              style: TextStyle(
-                fontFamily: 'Pacifico', // Use a script font if available
-                color: Colors.black,
-                fontSize: 28,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
+        children: [
+  Row(
+    mainAxisSize: MainAxisSize.min, // To prevent the row from expanding
+    children: [
+      Icon(Icons.spa, color: AppColors.primary),
+      SizedBox(width: 8),
+      Text(
+        'Plant Pulse',
+        style: TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+    ],
+  ),
+],
         ),
         actions: [
           IconButton(
