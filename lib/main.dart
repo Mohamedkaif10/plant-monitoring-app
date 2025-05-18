@@ -6,7 +6,9 @@ import 'schedule.dart'; // Import the new SchedulePage
 import 'image_upload_page.dart'; // Import the new ImageUploadPage
 import 'theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'plant_detail_page.dart';
+import 'indoor_plants_page.dart';
+import 'flowering_plants_page.dart';
 void main() {
   runApp(PlantGuruApp());
 }
@@ -109,21 +111,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<void> _launchURL() async {
-    final Uri url = Uri.parse('https://en.wikipedia.org/wiki/Monstera_deliciosa');
+    final Uri url =
+        Uri.parse('https://en.wikipedia.org/wiki/Monstera_deliciosa');
     if (!await launchUrl(url)) {
       throw 'Could not launch $url';
     }
   }
 
-  Future<void> _launchCategoryURL(String title) async {
-    final String urlString = title == 'Indoor Plants'
-        ? 'https://www.gardendesign.com/houseplants/best-indoor.html'
-        : 'https://en.wikipedia.org/wiki/Flowering_plant';
-    final Uri url = Uri.parse(urlString);
-    if (!await launchUrl(url)) {
-      throw 'Could not launch $urlString';
-    }
+Future<void> _launchCategoryURL(String title) async {
+  if (title == 'Indoor Plants') {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => IndoorPlantsPage()),
+    );
+  } else {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FloweringPlantsPage()),
+    );
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -133,23 +140,24 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColors.card,
         elevation: 0,
         title: Row(
-        children: [
-  Row(
-    mainAxisSize: MainAxisSize.min, // To prevent the row from expanding
-    children: [
-      Icon(Icons.spa, color: AppColors.primary),
-      SizedBox(width: 8),
-      Text(
-        'Plant Pulse',
-        style: TextStyle(
-          color: AppColors.primary,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
-      ),
-    ],
-  ),
-],
+          children: [
+            Row(
+              mainAxisSize:
+                  MainAxisSize.min, // To prevent the row from expanding
+              children: [
+                Icon(Icons.spa, color: AppColors.primary),
+                SizedBox(width: 8),
+                Text(
+                  'Plant Pulse',
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -183,7 +191,8 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16)),
                       child: Image.network(
                         'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
                         height: 170,
@@ -195,11 +204,13 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                       child: Text(
                         'Monstera Deliciosa',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       child: Text(
                         "Today's featured tropical beauty, known for its stunning split leaves and easy care requirements.",
                         style: TextStyle(color: Colors.grey[700], fontSize: 15),
@@ -216,12 +227,21 @@ class _HomePageState extends State<HomePage> {
                             minimumSize: Size(double.infinity, 48),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
-                              side: BorderSide(color: AppColors.primary, width: 2),
+                              side: BorderSide(
+                                  color: AppColors.primary, width: 2),
                             ),
                             elevation: 0,
                           ),
-                          onPressed: _launchURL,
-                          child: Text('Learn More', style: TextStyle(fontSize: 16)),
+                          // In your HomePage's _buildFeaturedPlantCard method, change the button's onPressed:
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PlantDetailsPage()),
+                            );
+                          },
+                          child: Text('Learn More',
+                              style: TextStyle(fontSize: 16)),
                         ),
                       ),
                     ),
@@ -233,18 +253,21 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _buildCategoryCard(
-                    imageUrl: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308',
+                    imageUrl:
+                        'https://images.unsplash.com/photo-1519125323398-675f0ddb6308',
                     title: 'Indoor Plants',
                   ),
                   SizedBox(width: 12),
                   _buildCategoryCard(
-                    imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
+                    imageUrl:
+                        'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
                     title: 'Flowering ...',
                   ),
                 ],
               ),
               SizedBox(height: 24),
-              Text('Seasonal Tips', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+              Text('Seasonal Tips',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
               SizedBox(height: 12),
               Row(
                 children: [
@@ -252,7 +275,8 @@ class _HomePageState extends State<HomePage> {
                     child: _buildTipCard(
                       icon: Icons.wb_sunny_outlined,
                       title: 'Summer Care',
-                      description: 'Keep your plants hydrated and protected from intense afternoon sun.',
+                      description:
+                          'Keep your plants hydrated and protected from intense afternoon sun.',
                     ),
                   ),
                   SizedBox(width: 12),
@@ -260,7 +284,8 @@ class _HomePageState extends State<HomePage> {
                     child: _buildTipCard(
                       icon: Icons.opacity,
                       title: 'Watering',
-                      description: 'Learn the best watering routines for different plants.',
+                      description:
+                          'Learn the best watering routines for different plants.',
                     ),
                   ),
                 ],
@@ -299,7 +324,10 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -309,7 +337,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTipCard({required IconData icon, required String title, required String description}) {
+  Widget _buildTipCard(
+      {required IconData icon,
+      required String title,
+      required String description}) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.18,
       decoration: BoxDecoration(
