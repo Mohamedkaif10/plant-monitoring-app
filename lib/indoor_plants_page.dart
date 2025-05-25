@@ -3,8 +3,6 @@ import 'plant_model.dart';
 import 'plant_card.dart';
 import 'indoor_plant_detail_page.dart';
 
-
-
 class IndoorPlantsPage extends StatelessWidget {
   final List<Plant> plants = [
     Plant(
@@ -12,26 +10,27 @@ class IndoorPlantsPage extends StatelessWidget {
       imageUrl: "https://m.media-amazon.com/images/I/61oCPV0EygL._SX679_.jpg",
       buyUrl: "https://amzn.in/d/3HOfMaY",
       description:
-          "The Golden Pothos is a versatile and beautiful trailing plant known for its heart-shaped leaves with stunning yellow and green variegation. Perfect for beginners, this air-purifying plant can thrive in various light conditions and helps remove indoor air pollutants.",
+          "The Snake Plant, also known as Mother-in-law’s Tongue, is a hardy indoor plant known for its upright, sword-like leaves with striking green and yellow margins. It’s an excellent air purifier, low maintenance, and ideal for beginners.",
       difficulty: "Easy",
-      toxicity: "Mild",
-      waterNeeds: "Moderate",
-      light: "Indirect",
-      scientificName: "Epipremium aureum",
-      family: "Araceae",
+      toxicity: "Mildly toxic if ingested",
+      waterNeeds: "Low",
+      light: "Low to bright indirect light",
+      scientificName: "Sansevieria trifasciata",
+      family: "Asparagaceae",
       price: "₹399",
     ),
     Plant(
       name: "ZZ Plant",
       imageUrl: "https://m.media-amazon.com/images/I/61ZRN9vL1FL._SX679_.jpg",
       buyUrl: "https://amzn.in/d/0G4crgv",
-      description: "Snake Plant description here...",
+      description:
+          "The ZZ Plant is a popular indoor plant known for its thick, glossy green leaves and ability to thrive on neglect. It's extremely drought-tolerant and handles low-light environments well, making it perfect for beginners or offices.",
       difficulty: "Easy",
-      toxicity: "Mild",
+      toxicity: "Mildly toxic if ingested",
       waterNeeds: "Low",
-      light: "Indirect",
-      scientificName: "Sansevieria trifasciata",
-      family: "Asparagaceae",
+      light: "Low to indirect light",
+      scientificName: "Zamioculcas zamiifolia",
+      family: "Araceae",
       price: "₹499",
     ),
     Plant(
@@ -51,14 +50,15 @@ class IndoorPlantsPage extends StatelessWidget {
       name: "Peace Lily",
       imageUrl: "https://m.media-amazon.com/images/I/71iRMuC+-KL._SX679_.jpg",
       buyUrl: "https://amzn.in/d/cDEslj4",
-      description: "Snake Plant description here...",
+      description:
+          "Aloe Vera is a succulent plant famous for its medicinal properties. It has thick, fleshy leaves filled with a soothing gel used for burns and skin care. It requires minimal maintenance.",
       difficulty: "Easy",
-      toxicity: "Mild",
+      toxicity: "Toxic to pets",
       waterNeeds: "Low",
-      light: "Indirect",
-      scientificName: "Sansevieria trifasciata",
-      family: "Asparagaceae",
-      price: "₹499",
+      light: "Bright, indirect sunlight",
+      scientificName: "Aloe barbadensis miller",
+      family: "Asphodelaceae",
+      price: "₹249",
     ),
   ];
 

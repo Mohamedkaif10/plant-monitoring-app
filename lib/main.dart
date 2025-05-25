@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'plant_detail_page.dart';
 import 'indoor_plants_page.dart';
 import 'flowering_plants_page.dart';
+
 void main() {
   runApp(PlantGuruApp());
 }
@@ -37,25 +38,21 @@ class _MainPageState extends State<MainPage> {
   void _onItemTapped(int index) {
     setState(() {
       if (index == 1) {
-        // Navigate to PlantsPage when Plants icon is tapped
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => PlantsPage()),
         );
       } else if (index == 2) {
-        // Navigate to ImageUploadPage when Diagnosis (QR code) is tapped
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ImageUploadPage()),
         );
       } else if (index == 3) {
-        // Navigate to SchedulePage when watering can is tapped
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SchedulePage()),
         );
       } else if (index == 4) {
-        // Navigate to ProfilePage when profile icon is tapped
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ProfilePage()),
@@ -89,7 +86,7 @@ class _MainPageState extends State<MainPage> {
             label: 'Diagnosis',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_florist), // Watering can icon
+            icon: Icon(Icons.local_florist),
             label: 'Schedule',
           ),
           BottomNavigationBarItem(
@@ -118,19 +115,19 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-Future<void> _launchCategoryURL(String title) async {
-  if (title == 'Indoor Plants') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => IndoorPlantsPage()),
-    );
-  } else {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => FloweringPlantsPage()),
-    );
+  Future<void> _launchCategoryURL(String title) async {
+    if (title == 'Indoor Plants') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => IndoorPlantsPage()),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FloweringPlantsPage()),
+      );
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -142,8 +139,7 @@ Future<void> _launchCategoryURL(String title) async {
         title: Row(
           children: [
             Row(
-              mainAxisSize:
-                  MainAxisSize.min, // To prevent the row from expanding
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.spa, color: AppColors.primary),
                 SizedBox(width: 8),
@@ -194,7 +190,7 @@ Future<void> _launchCategoryURL(String title) async {
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(16)),
                       child: Image.network(
-                        'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTfVwujyxyZ1aSB41zdgHnpY8dPKXr8yka-v6KiiTK2mo_z1fgsSCaj2izG48SePX-lF9Qf184HJ25otkVpid2gQ',
                         height: 170,
                         width: double.infinity,
                         fit: BoxFit.cover,
@@ -232,7 +228,6 @@ Future<void> _launchCategoryURL(String title) async {
                             ),
                             elevation: 0,
                           ),
-                          // In your HomePage's _buildFeaturedPlantCard method, change the button's onPressed:
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -252,83 +247,100 @@ Future<void> _launchCategoryURL(String title) async {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(width: 12),
                   _buildCategoryCard(
                     imageUrl:
-                        'https://images.unsplash.com/photo-1519125323398-675f0ddb6308',
+                        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.marthastewart.com%2F8023673%2Fbest-indoor-flowering-plants-garden&psig=AOvVaw2Y0MoccTMOem0uDtXChAwM&ust=1748269627922000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCNiBvILqvo0DFQAAAAAdAAAAABAd',
                     title: 'Indoor Plants',
                   ),
                   SizedBox(width: 12),
                   _buildCategoryCard(
                     imageUrl:
-                        'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
-                    title: 'Flowering ...',
+                        'https://hips.hearstapps.com/hmg-prod/images/summer-flowers-dahlia-flowers-pink-flower-garden-royalty-free-image-1710974666.jpg?crop=1xw:0.84415xh;center,top&resize=1200:*',
+                    title: 'Flowering Plants',
                   ),
                 ],
               ),
               SizedBox(height: 24),
               // Seasonal Tips
-Text('Seasonal Tips',
-    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-SizedBox(height: 12),
-Row(
-  children: [
-    Expanded(
-      child: _buildTipCard(
-        icon: Icons.wb_sunny_outlined,
-        title: 'Summer Care',
-        description:
-            'Keep your plants hydrated and protected from intense afternoon sun.',
-      ),
-    ),
-    SizedBox(width: 12),
-    Expanded(
-      child: _buildTipCard(
-        icon: Icons.opacity,
-        title: 'Watering',
-        description:
-            'Learn the best watering routines for different plants.',
-      ),
-    ),
-  ],
-),
-SizedBox(height: 24),
-
-// 💧 Watering Routines Section — Newly Added
-Container(
-  padding: EdgeInsets.all(16),
-  decoration: BoxDecoration(
-    color: AppColors.card,
-    borderRadius: BorderRadius.circular(14),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.04),
-        blurRadius: 6,
-        offset: Offset(0, 2),
-      ),
-    ],
-  ),
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Row(
-        children: [
-          Icon(Icons.water_drop, color: Colors.green[800], size: 22),
-          SizedBox(width: 6),
-          Text(
-            'Watering Routines',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-        ],
-      ),
-      SizedBox(height: 8),
-      Text(
-        'Keep track of how often each plant needs watering. Some plants need daily misting, while others prefer drier soil between waterings.',
-        style: TextStyle(fontSize: 13, color: Colors.grey[700]),
-      ),
-    ],
-  ),
-),
-SizedBox(height: 24),
+              Text('Seasonal Tips',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+              SizedBox(height: 12),
+              // Watering Routines Section
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.card,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 6,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.water_drop,
+                            color: Colors.green[800], size: 22),
+                        SizedBox(width: 6),
+                        Text(
+                          'Watering Routines',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Keep track of how often each plant needs watering. Some plants need daily misting, while others prefer drier soil between waterings.',
+                      style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24), // Added vertical space here
+              // Winter Care Section
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.card,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 6,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.water_drop,
+                            color: Colors.green[800], size: 22),
+                        SizedBox(width: 6),
+                        Text(
+                          'Winter Care',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'During winter, reduce watering frequency as plants grow more slowly. Protect sensitive plants from cold drafts and consider using a humidifier.',
+                      style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 24),
             ],
           ),
@@ -371,40 +383,6 @@ SizedBox(height: 24),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildTipCard(
-      {required IconData icon,
-      required String title,
-      required String description}) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.18,
-      decoration: BoxDecoration(
-        color: AppColors.card,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 6,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      padding: EdgeInsets.all(14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: Colors.black, size: 22),
-          SizedBox(height: 6),
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(height: 2),
-          Text(
-            description,
-            style: TextStyle(fontSize: 13, color: Colors.grey[700]),
-          ),
-        ],
       ),
     );
   }

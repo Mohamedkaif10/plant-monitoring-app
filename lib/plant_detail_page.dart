@@ -18,7 +18,7 @@ class PlantDetailsPage extends StatelessWidget {
               height: 300,
               width: double.infinity,
               child: Image.network(
-                'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+                'https://m.media-amazon.com/images/I/61RwYODKheL._SX679_.jpg',
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -99,7 +99,7 @@ class PlantDetailsPage extends StatelessWidget {
 ),
 
                   onPressed: () async {
-                    final url = 'https://amzn.in/d/eBFCHJl';
+                    final url = 'https://amzn.in/d/dMHmBn4';
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
