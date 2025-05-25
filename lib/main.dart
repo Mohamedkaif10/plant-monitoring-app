@@ -266,31 +266,69 @@ Future<void> _launchCategoryURL(String title) async {
                 ],
               ),
               SizedBox(height: 24),
-              Text('Seasonal Tips',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-              SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTipCard(
-                      icon: Icons.wb_sunny_outlined,
-                      title: 'Summer Care',
-                      description:
-                          'Keep your plants hydrated and protected from intense afternoon sun.',
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: _buildTipCard(
-                      icon: Icons.opacity,
-                      title: 'Watering',
-                      description:
-                          'Learn the best watering routines for different plants.',
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 24),
+              // Seasonal Tips
+Text('Seasonal Tips',
+    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+SizedBox(height: 12),
+Row(
+  children: [
+    Expanded(
+      child: _buildTipCard(
+        icon: Icons.wb_sunny_outlined,
+        title: 'Summer Care',
+        description:
+            'Keep your plants hydrated and protected from intense afternoon sun.',
+      ),
+    ),
+    SizedBox(width: 12),
+    Expanded(
+      child: _buildTipCard(
+        icon: Icons.opacity,
+        title: 'Watering',
+        description:
+            'Learn the best watering routines for different plants.',
+      ),
+    ),
+  ],
+),
+SizedBox(height: 24),
+
+// 💧 Watering Routines Section — Newly Added
+Container(
+  padding: EdgeInsets.all(16),
+  decoration: BoxDecoration(
+    color: AppColors.card,
+    borderRadius: BorderRadius.circular(14),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.04),
+        blurRadius: 6,
+        offset: Offset(0, 2),
+      ),
+    ],
+  ),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: [
+          Icon(Icons.water_drop, color: Colors.green[800], size: 22),
+          SizedBox(width: 6),
+          Text(
+            'Watering Routines',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        ],
+      ),
+      SizedBox(height: 8),
+      Text(
+        'Keep track of how often each plant needs watering. Some plants need daily misting, while others prefer drier soil between waterings.',
+        style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+      ),
+    ],
+  ),
+),
+SizedBox(height: 24),
               SizedBox(height: 24),
             ],
           ),
