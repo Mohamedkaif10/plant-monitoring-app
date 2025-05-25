@@ -8,12 +8,14 @@ class PlantsPage extends StatelessWidget {
     {
       'title': 'Purple Lavender Flower',
       'imageUrl': 'https://m.media-amazon.com/images/I/71k6mZIN6xL._SX679_.jpg',
-      'subtitle': 'Live Wonderful All Season Purple Lavender Flower Tree Healthy Live Plant For Home Garden Outdoor Indoor plant',
+      'subtitle':
+          'Live Wonderful All Season Purple Lavender ',
     },
     {
       'title': 'Gandharaj Live Plant',
       'imageUrl': 'https://m.media-amazon.com/images/I/6176+dL1SNL._SX679_.jpg',
-      'subtitle': 'All Seasons Gardenia/Gandharaj Live Plant - Fragrant Blooms Choice for gardens and indoor spaces',
+      'subtitle':
+          'All Seasons Gardenia/Gandharaj Live Plant',
     },
   ];
 
@@ -21,12 +23,14 @@ class PlantsPage extends StatelessWidget {
     {
       'title': 'Purple Lavender Flower',
       'imageUrl': 'https://m.media-amazon.com/images/I/71k6mZIN6xL._SX679_.jpg',
-      'subtitle': 'Live Wonderful All Season Purple Lavender Flower Tree Healthy Live Plant For Home Garden Outdoor Indoor plant',
+      'subtitle':
+          'Live Wonderful  Purple Lavender Flower ',
     },
     {
       'title': 'Gandharaj Live Plant',
       'imageUrl': 'https://m.media-amazon.com/images/I/6176+dL1SNL._SX679_.jpg',
-      'subtitle': 'All Seasons Gardenia/Gandharaj Live Plant - Fragrant Blooms Choice for gardens and indoor spaces',
+      'subtitle':
+          'All Seasons Gardenia/Gandharaj Live Plant ',
     },
   ];
 
@@ -48,10 +52,11 @@ class PlantsPage extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'Search plants...',
               hintStyle: TextStyle(color: AppColors.grey),
-             border: OutlineInputBorder(  // Changed from OutlookInputBorder to OutlineInputBorder
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide.none,
-    ),
+              border: OutlineInputBorder(
+                // Changed from OutlookInputBorder to OutlineInputBorder
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
               filled: true,
               fillColor: AppColors.background,
               prefixIcon: Icon(Icons.search, color: AppColors.grey),
@@ -128,38 +133,48 @@ class PlantsPage extends StatelessWidget {
                 children: [
                   _buildFamousPlantCard(
                     context: context,
-                    imageUrl: 'https://m.media-amazon.com/images/I/61nywQ21yqL._SX679_.jpg',
+                    imageUrl:
+                        'https://m.media-amazon.com/images/I/61nywQ21yqL._SX679_.jpg',
                     title: 'Ugaoo Air Purifying Bamboo Palm',
                     subtitle: 'Live Plant With Grow Pot',
                     price: '₹599',
-                    about: 'The Bamboo Palm is an elegant indoor plant that purifies the air by removing toxins. It thrives in indirect light and requires moderate watering.',
+                    about:
+                        'The Bamboo Palm is an elegant indoor plant that purifies the air by removing toxins. It thrives in indirect light and requires moderate watering.',
                     amazonLink: 'https://amzn.in/d/eBFCHJl',
                   ),
                   _buildFamousPlantCard(
                     context: context,
-                    imageUrl: 'https://m.media-amazon.com/images/I/31DL28fs4-L.jpg',
+                    imageUrl:
+                        'https://m.media-amazon.com/images/I/31DL28fs4-L.jpg',
                     title: 'Areca Palm',
-                    subtitle: 'Indoor air purifying plants for living room Natural Live A Big Size "Areca Palm" Tree',
+                    subtitle:
+                        'Indoor air purifying plants "Areca Palm" Tree',
                     price: '₹799',
-                    about: 'The Areca Palm is a popular choice for brightening up living spaces. It prefers bright, indirect light and regular watering to keep its lush fronds vibrant.',
+                    about:
+                        'The Areca Palm is a popular choice for brightening up living spaces. It prefers bright, indirect light and regular watering to keep its lush fronds vibrant.',
                     amazonLink: 'https://amzn.in/d/cYiajrg',
                   ),
                   _buildFamousPlantCard(
                     context: context,
-                    imageUrl: 'https://m.media-amazon.com/images/I/41mH3c+M0hL.jpg',
+                    imageUrl:
+                        'https://m.media-amazon.com/images/I/41mH3c+M0hL.jpg',
                     title: 'Desert Roses Live Flower Plant',
-                    subtitle: 'Cloud Farm Bonsai Air Layered Adenium/Desert Roses Live Flower Plant',
+                    subtitle:
+                        'Cloud Farm Bonsai Air Layered  Flower Plant',
                     price: '₹499',
-                    about: 'Desert Roses are striking succulents with vibrant blooms. They require minimal watering and thrive in bright, direct sunlight, making them ideal for sunny spots.',
+                    about:
+                        'Desert Roses are striking succulents with vibrant blooms. They require minimal watering and thrive in bright, direct sunlight, making them ideal for sunny spots.',
                     amazonLink: 'https://amzn.in/d/95qRpXW',
                   ),
                   _buildFamousPlantCard(
                     context: context,
-                    imageUrl: 'https://m.media-amazon.com/images/I/71kCOMzV0TL._SX679_.jpg',
+                    imageUrl:
+                        'https://m.media-amazon.com/images/I/71kCOMzV0TL._SX679_.jpg',
                     title: 'Pothos',
                     subtitle: 'Pothos plant',
                     price: '₹299',
-                    about: 'Pothos is a low-maintenance trailing plant perfect for beginners. It grows well in low to medium light and needs watering when the soil feels dry.',
+                    about:
+                        'Pothos is a low-maintenance trailing plant perfect for beginners. It grows well in low to medium light and needs watering when the soil feels dry.',
                     amazonLink: 'https://amzn.in/d/55uty9H',
                   ),
                 ],
@@ -240,7 +255,10 @@ class PlantsPage extends StatelessWidget {
             Flexible(
               child: Text(
                 title,
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -308,19 +326,23 @@ class PlantsPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         title,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       SizedBox(height: 2),
                       Text(
                         subtitle,
                         style: TextStyle(color: AppColors.grey, fontSize: 13),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -393,7 +415,8 @@ class PlantCategoryPage extends StatelessWidget {
   }) {
     return GestureDetector(
       onTap: () async {
-        final Uri url = Uri.parse('https://example.com'); // Replace with your link
+        final Uri url =
+            Uri.parse('https://example.com'); // Replace with your link
         if (!await launchUrl(url)) {
           throw 'Could not launch $url';
         }
@@ -430,19 +453,23 @@ class PlantCategoryPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         title,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       SizedBox(height: 2),
                       Text(
                         subtitle,
                         style: TextStyle(color: AppColors.grey, fontSize: 13),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -524,7 +551,9 @@ class PlantDetailPage extends StatelessWidget {
                   SizedBox(height: 8),
                   Text(
                     subtitle,
-                    style: TextStyle(color: AppColors.grey, fontSize: 16),
+                    style: TextStyle(color: AppColors.grey, fontSize: 13),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 12),
                   Text(
@@ -561,7 +590,8 @@ class PlantDetailPage extends StatelessWidget {
                       onPressed: _launchAmazonLink,
                       child: Text(
                         'View in Amazon',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
