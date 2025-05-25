@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(width: 12),
                   _buildCategoryCard(
                     imageUrl:
-                        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.marthastewart.com%2F8023673%2Fbest-indoor-flowering-plants-garden&psig=AOvVaw2Y0MoccTMOem0uDtXChAwM&ust=1748269627922000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCNiBvILqvo0DFQAAAAAdAAAAABAd',
+                        'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTBJUEymUfUdanDg9ZwiRjATKdqdI1PHPZdx7wW_3XBpxzejf0qzrDs8CuskTE8qrByUlyb8MPGySIH_wnz4LqNVQ',
                     title: 'Indoor Plants',
                   ),
                   SizedBox(width: 12),
