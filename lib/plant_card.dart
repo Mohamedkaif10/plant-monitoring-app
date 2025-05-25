@@ -1,32 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'plant_model.dart';
+// import 'indoor_plant_detail_page.dart';
+// class PlantGrid extends StatelessWidget {
+//   final List<Plant> plants;
+//   const PlantGrid({super.key, required this.plants});
 
-class PlantGrid extends StatelessWidget {
-  final List<Plant> plants;
-
-  const PlantGrid({required this.plants});
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.all(16),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // Number of columns
-        crossAxisSpacing: 16, // Horizontal space between cards
-        mainAxisSpacing: 16, // Vertical space between cards
-        childAspectRatio: 0.8, // Width/height ratio of each card
-      ),
-      itemCount: plants.length,
-      itemBuilder: (context, index) => PlantCard(plant: plants[index]),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GridView.builder(
+//       padding: EdgeInsets.all(16),
+//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//         crossAxisCount: 2,
+//         crossAxisSpacing: 16,
+//         mainAxisSpacing: 16,
+//         childAspectRatio: 0.8,
+//       ),
+//       itemCount: plants.length,
+//       itemBuilder: (context, index) => PlantCard(
+//         plant: plants[index],
+//         onTap: () {
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute(
+//               builder: (context) => PlantDetailPage(plant: plants[index]),
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
 
 class PlantCard extends StatelessWidget {
   final Plant plant;
+  final VoidCallback onTap;
 
-  const PlantCard({required this.plant});
+  const PlantCard({super.key, required this.plant, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +46,7 @@ class PlantCard extends StatelessWidget {
       elevation: 2,
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () async {
-          if (await canLaunch(plant.buyUrl)) {
-            await launch(plant.buyUrl);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Could not launch link')),
-            );
-          }
-        },
+        onTap: onTap,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -59,14 +60,10 @@ class PlantCard extends StatelessWidget {
                   fit: BoxFit.cover,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return Center(child: CircularProgressIndicator());
                   },
                   errorBuilder: (context, error, stackTrace) {
-                    return Center(
-                      child: Icon(Icons.error_outline, size: 40),
-                    );
+                    return Center(child: Icon(Icons.error_outline, size: 40));
                   },
                 ),
               ),
